@@ -12,6 +12,13 @@ public final class Boss extends Employee {
         super(first, last, date); // call superclass constructor
         setWeeklySalary(salary);
     }
+    //second constructor handle dates entered in manually
+    public Boss(String first, String last, double salary,
+            int year, int month, int day, int hour, int minute)
+        throws InvalidDateException{
+        super(first, last, year, month, day, hour, minute); // call superclass constructor
+        setWeeklySalary(salary);
+    }
 
     // set Boss's salary
     public void setWeeklySalary(double salary) {

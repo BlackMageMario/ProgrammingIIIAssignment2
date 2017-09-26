@@ -17,6 +17,16 @@ public final class CommissionWorker extends Employee {
         setCommission(commission);
         setQuantity(quantity);
     }
+    //second constructor handle dates entered in manually
+    public CommissionWorker(String first, String last,
+            double salary, double commission, int quantity, 
+            int year, int month, int day, int hour, int minute)
+        throws InvalidDateException{
+        super(first, last, year, month, day, hour, minute); // call superclass constructor
+        setSalary(salary);
+        setCommission(commission);
+        setQuantity(quantity);
+    }
 
     // set CommissionWorker's weekly base salary
     public void setSalary(double weeklySalary) {

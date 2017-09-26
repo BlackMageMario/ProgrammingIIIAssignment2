@@ -2,6 +2,7 @@ package programmingiiiassignment2;
 // Abstract base class Employee.
 
 import org.joda.time.DateTime;
+import org.joda.time.IllegalFieldValueException;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -24,15 +25,38 @@ public abstract class Employee {
         startDate = date;
         currentEmployNum = employeeNum++;
     }
+    //second constructor handle dates entered in manually
+    public Employee(String first, String last, int year, int month, 
+            int day, int hour, int minute)throws InvalidDateException
+    {
+        firstName = first;
+        lastName = last;
+        DateTime dateToTest;
+        try
+        {
+             dateToTest = new DateTime(year, month, day, hour, minute);
+        }
+        catch(IllegalFieldValueException ex)
+        {
+            //catch joda time exception and throw new one
+            String fullName = firstName + " " + lastName;
+            String dateString = day + "/" + month + "/" + year;
+            throw new InvalidDateException(fullName, dateString, "the month supplied is out of range [1, 12].");
+        }
+        testDate(dateToTest);
+        startDate = dateToTest;
+        currentEmployNum = employeeNum++;
+    }
 
     // get first name
     public String getFirstName() {
         return firstName;
     }
-    public void testDate(DateTime date) throws InvalidDateException
+    private void testDate(DateTime date) throws InvalidDateException
     {
         String fullName = firstName + " " + lastName;
         String dateString = dateTimeFormat.print(date);
+        
         if(date.isAfter(DateTime.now()))
         {
             throw new InvalidDateException(fullName, dateString,

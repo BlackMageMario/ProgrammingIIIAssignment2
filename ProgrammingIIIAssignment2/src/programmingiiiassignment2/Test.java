@@ -1,7 +1,7 @@
 package programmingiiiassignment2;
 import org.joda.time.DateTime;
 // Driver for Employee hierarchy
-//Assignment 1 - Eamonn Hannon - 15310091
+// Assignment 2 - Eamonn Hannon - 15310091
 // Java core packages
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -9,31 +9,32 @@ import java.util.Random;
 // Java extension packages
 import javax.swing.JOptionPane;
 import org.joda.time.Days;
-import org.joda.time.IllegalFieldValueException;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 public class Test {
     public static void main(String args[]) {
         ArrayList<Employee> employees = new ArrayList<Employee>(5);
-        //Employee employee; // superclass reference
+        //this array list is created and dates added to it
+        //to create random dates to test with
+        //unfortunately because DateTime throws on months out of range
+        //they are not included in this random array and are tested for
+        //manually
         ArrayList<DateTime> differentDates = new ArrayList<DateTime>(5);
         differentDates.add(new DateTime(1985, 6, 30, 13, 12));
         differentDates.add(new DateTime(2020, 8, 4, 10, 23 ));
         differentDates.add(new DateTime(1996, 2, 29, 9, 35));
-        //differentDates.add(new DateTime(2010, 13, 9, 14, 45)); literally cannot be added
         differentDates.add(new DateTime(2008, 10, 27, 8, 33));
         differentDates.add(new DateTime(2003, 1, 18, 11, 14));
-        //differentDates.add(new DateTime(1999, 2, 30, 16, 11)); literally cannot be added
         differentDates.add(new DateTime(2015, 7, 8, 12, 37));
-        ArrayList<DateTime> randomDates = randomiseDates(differentDates, 4);
+        ArrayList<DateTime> randomDates = randomiseDates(differentDates, 3);
         Boss boss;
         try
         {
             boss = new Boss("John", "Smith", 800.0, randomDates.get(0));
             employees.add(boss);
         }
-        catch(InvalidDateException | IllegalFieldValueException ex)
+        catch(InvalidDateException ex)
         {
             System.err.println(ex.getMessage());
         }
@@ -42,10 +43,10 @@ public class Test {
         {
             commissionWorker = new CommissionWorker(
                 "Sue", "Jones", 400.0, 3.0, 150,
-                randomDates.get(1));
+                2010, 13, 9, 14, 45);
             employees.add(commissionWorker);
         }
-        catch(InvalidDateException | IllegalFieldValueException ex)
+        catch(InvalidDateException ex)
         {
             System.err.println(ex.getMessage());
         }
@@ -53,10 +54,10 @@ public class Test {
         try
         {
             pieceWorker = new PieceWorker("Bob", "Lewis", 2.5, 200,
-                randomDates.get(2));
+                randomDates.get(1));
             employees.add( pieceWorker);
         }
-        catch(InvalidDateException | IllegalFieldValueException ex)
+        catch(InvalidDateException ex)
         {
             System.err.println(ex.getMessage());
         }
@@ -64,14 +65,16 @@ public class Test {
         try
         {
             hourlyWorker  =
-                new HourlyWorker("Karen", "Price", -13.75, 4,
-                randomDates.get(3));
+                new HourlyWorker("Karen", "Price", 13.75, 4,
+                randomDates.get(2));
              employees.add(hourlyWorker);
         }
-        catch(InvalidDateException | IllegalFieldValueException ex)
+        catch(InvalidDateException ex)
         {
             System.err.println(ex.getMessage());
         }
+        //this workwer will always exist so we put him in
+        //as a test
         HourlyWorker willWorkWorker;
         try
         {
@@ -79,7 +82,7 @@ public class Test {
                     13.75, 4, new DateTime(2014, 1, 1, 12, 0));
             employees.add(willWorkWorker);
         }
-        catch(InvalidDateException | IllegalFieldValueException ex)
+        catch(InvalidDateException ex)
         {
             System.err.println(ex.getMessage());
         }
@@ -122,6 +125,7 @@ public class Test {
     {
         ArrayList<DateTime> randomDates = new ArrayList<DateTime>();
         DateTime current = DateTime.now();
+        //seed the random seed with the current time
         Random rand = new Random(current.getMillis());
         for(int i =0; i < numDatesWanted; i++)
         {

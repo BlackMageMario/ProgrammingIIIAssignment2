@@ -18,6 +18,15 @@ public final class HourlyWorker extends Employee {
         setWage(wagePerHour);
         setHours(hoursWorked);
     }
+    //second constructor handle dates entered in manually
+    public HourlyWorker(String first, String last,
+            double wagePerHour, double hoursWorked, 
+            int year, int month, int day, int hour, int minute)
+            throws InvalidDateException{
+        super(first, last, year, month, day, hour, minute); // call superclass constructor
+        setWage(wagePerHour);
+        setHours(hoursWorked);
+    }
 
     // Set the wage
     public void setWage(double wagePerHour) {

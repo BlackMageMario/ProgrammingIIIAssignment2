@@ -15,6 +15,15 @@ public final class PieceWorker extends Employee {
         setWage(wage);
         setQuantity(numberOfItems);
     }
+    //second constructor handle dates entered in manually
+    public PieceWorker(String first, String last,
+            double wage, int numberOfItems, 
+            int year, int month, int day, int hour, int minute)
+            throws InvalidDateException {
+        super(first, last, year, month, day, hour, minute); // call superclass constructor
+        setWage(wage);
+        setQuantity(numberOfItems);
+    }
 
     // set PieceWorker's wage
     public void setWage(double wage) {
